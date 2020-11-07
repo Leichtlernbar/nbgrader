@@ -2,58 +2,55 @@ c = get_config()
 
 # Our user list
 c.Authenticator.whitelist = [
-    'instructor1',
-    'instructor2',
-    'student1',
-    'grader-course101',
-    'grader-course123'
+    'suess_j1',
+    'suess_j2'
 ]
 
 c.Authenticator.admin_users = {
-    'instructor1',
-    'instructor2'
+    'suess_j1',
+    'suess_j2'
 }
 
 # instructor1 and instructor2 have access to different shared servers:
 c.JupyterHub.load_groups = {
-    'formgrade-course101': [
-        'instructor1',
-        'grader-course101',
+    'formgrade-kurs_j1': [
+        'suess_j1',
     ],
-    'formgrade-course123': [
-        'instructor2',
-        'grader-course123'
+    'formgrade-kurs_j2': [
+        'suess_j2'
     ],
-    'nbgrader-course101': [],
-    'nbgrader-course123': []
+    'nbgrader-kurs_j1': [],
+    'nbgrader-kurs_j2': []
 }
 
 # Start the notebook server as a service. The port can be whatever you want
 # and the group has to match the name of the group defined above.
 c.JupyterHub.services = [
     {
-        'name': 'course101',
+        'name': 'kurs_j1',
         'url': 'http://127.0.0.1:9999',
         'command': [
             'jupyterhub-singleuser',
-            '--group=formgrade-course101',
+            '--group=formgrade-kurs_j1',
             '--debug',
         ],
-        'user': 'grader-course101',
-        'cwd': '/home/grader-course101',
-        'api_token': '{{course101_token}}'
+        'user': 'grader-kurs_j1',
+        'cwd': '/home/suess_j1',
+        'api_token': '{{kurs_j1_token}}'
     },
+    
     {
-        'name': 'course123',
+        'name': 'kurs_j2',
         'url': 'http://127.0.0.1:9998',
         'command': [
             'jupyterhub-singleuser',
-            '--group=formgrade-course123',
+            '--group=formgrade-kurs_j2',
             '--debug',
         ],
-        'user': 'grader-course123',
-        'cwd': '/home/grader-course123',
-        'api_token': '{{course123_token}}'
+        'user': 'grader-kurs_j2',
+        'cwd': '/home/suess_j2',
+        'api_token': '{{kurs_j2_token}}'
     },
+    
 ]
 
